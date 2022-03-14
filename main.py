@@ -1,5 +1,4 @@
 import cnpj
-import time
 
 if __name__ == "__main__":
     # cnpj funcional -> 04.252.011/0001-10
@@ -7,15 +6,19 @@ if __name__ == "__main__":
 
     if cnpj_og.lower() == 'gerar':
         quantidade = input('Quantos deseja gerar? [Máximo 100]: ')
+        cnpjs = open('cnpjs.txt', 'w')
         if quantidade.isnumeric():
             quantidade = int(quantidade)
             if quantidade <= 100:
                 for i in range(quantidade):
-                    print(cnpj.gera())
+                    cnpjs.write(cnpj.gera())
+                    cnpjs.write('\n' + '-' * 50 + '\n')
             else:
                 print(f'Não é possível gerar {quantidade} CNPJ')
         else:
             print('Insira apenas números positivos.')
+        print('Arquivo .txt criado.')
+        cnpjs.close()
     else:
         teste_cnpj = cnpj.formata_cnpj(cnpj_og)
         if teste_cnpj.isnumeric():
@@ -31,6 +34,4 @@ if __name__ == "__main__":
                 print('CNPJ inválido.')
 
         else:
-            print('Não insira letras.')
-
-    time.sleep(60)
+            print('Insira números ou escreva [gerar].')
